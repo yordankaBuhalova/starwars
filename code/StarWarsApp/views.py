@@ -6,9 +6,7 @@ import petl as etl
 from django.contrib import messages
 import logging
 
-
 logger = logging.getLogger(__name__)
-
 
 
 class ListView(TemplateView):
