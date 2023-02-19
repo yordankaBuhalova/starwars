@@ -17,7 +17,7 @@ def collect():
 
     transform_data(people, planets)
     # queryset of files
-    files = DatasetCSV.objects.all()
+    files = DatasetCSV.objects.all().order_by('-created_date')
 
     return files
 
