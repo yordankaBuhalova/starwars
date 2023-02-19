@@ -36,7 +36,7 @@ def collect_data(dataset):
     # fetch data
     fetch(data_url, el_count, data)
     # page counter
-    total_pages = count_total_pages(el_count, len(data))
+    total_pages = count_total_pages(el_count.value, len(data))
     # set url for one page
     data_url = data_url + '?page='
 
@@ -61,7 +61,7 @@ def fetch(url, el_count, data_result):
     if r.status_code == 200:
         res = r.json()
         if '?page=' not in url:
-            el_count.value= res["count"]
+            el_count.value = res["count"]
 
         data = res["results"]
         for i in data:
