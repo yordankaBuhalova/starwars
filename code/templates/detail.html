@@ -1,0 +1,72 @@
+{% extends 'base_site.html' %}
+
+{% block content %}
+{% if csv_file %}
+<div class="m-2">
+    <div class="d-inline-flex"> <a href="" data-toggle="tooltip" data-title="Load file" >{{csv_file.filename}}</a> </div>
+</div>
+
+<form name="count" method="post" action="">
+    {% csrf_token %}
+    <div class="btn-group mb-3" role="group" id="select_btn"  aria-label="Basic checkbox toggle button group">
+
+        {% for key in head %}
+        {%if key in criteries %}
+            <input type="checkbox" name="{{key}}" class="btn-check" id="{{key}}" autocomplete="off" value="{{key}}" checked onchange="this.form.submit()">
+        {%else%}
+        <input type="checkbox" name="{{key}}" class="btn-check" id="{{key}}" autocomplete="off" value="{{key}}"  onchange="this.form.submit()">
+        {%endif%}
+            <label class="btn btn-light" for="{{key}}">{{key}}</label>
+        {% endfor %}
+    </div>
+</form>
+
+<table class="table table-lg table-striped">
+    <thead>
+        <tr>
+            {% if count_header %}
+                {%for key in count_header %}
+                <th scope="col" class="tb-head">{{key}}</th>
+                {%endfor%}
+            {%else%}
+                {%for key in head %}
+                <th scope="col" class="tb-head tb-head-color">{{key}}</th>
+                {%endfor%}
+            {%endif%}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in table %}
+        <tr>
+            {% for col in row %}
+            <td class="col">{{col}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="load_entries" value="{{ table | length }}">
+    {% if table_end %}
+    <button type="submit" class="btn btn-outline-primary " hidden>Load More</button>
+    {%else %}
+    <button type="submit" class="btn btn-outline-primary ">Load More</button>
+    {%endif%}
+</form>
+
+
+
+
+
+
+{% else %}
+<p>No csv_file are available.</p>
+
+
+    </tbody>
+</table>
+ {% endif %}
+
+{% endblock %}

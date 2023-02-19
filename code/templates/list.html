@@ -1,0 +1,28 @@
+{% extends 'base_site.html' %}
+
+{% block content %}
+    <div class="mb-2">
+        <div class="d-inline-flex">
+            <h1>Collections</h1>
+        </div>
+        <div class="d-inline-flex">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success mb-3" >Fetch</button>
+            </form>
+        </div>
+    </div>
+
+    {% if files %}
+        <ul class="list-group">
+            {% for file in files %}
+            <li class="list-group-item">
+                <a href="csv/{{file.pk}}"> {{file.created_date}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No files are available.</p>
+    {% endif %}
+{% endblock %}

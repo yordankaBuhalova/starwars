@@ -1,0 +1,37 @@
+:root {
+    --custom-blue: #447e9b;
+    --custom-black: #212529;
+    --custom-navback: #ffc107;
+}
+
+#header {
+    background-color: var(--custom-navback);
+}
+
+.colection-a {
+    color: var(--custom-blue) !important;
+}
+
+#site-name {
+    color: var(--custom-black) !important;
+    display:inline;
+
+}
+
+.header-title {
+    color: var(--custom-black) !important;
+    font-weight: bold !important;
+}
+
+a {
+    font-weight: bolder;
+}
+
+.tb-head {
+    font-weight: bolder;
+    text-transform: lowercase;
+}
+
+.tb-head-color {
+    color: var(--custom-blue) !important;
+}

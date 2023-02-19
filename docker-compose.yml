@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    environment:
+      PGDATA: /data/postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+        - postgres:/data/postgres
+
+  web:
+    build:
+      context: .
+    image: dj-web
+    ports:
+      - 8000:8000
+    volumes:
+      - ./code:/code
+    environment:
+      DJANGO_SUPERUSER_USERNAME: root
+      DJANGO_SUPERUSER_PASSWORD: root
+      DJANGO_SUPERUSER_EMAIL: root@example.com
+    depends_on:
+      - db
+
+volumes:
+  postgres:
