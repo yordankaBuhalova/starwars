@@ -3,6 +3,12 @@ from django.views.generic import TemplateView
 from StarWarsApp.collect_data import collect
 from StarWarsApp.models import DatasetCSV
 import petl as etl
+from django.contrib import messages
+import logging
+
+
+logger = logging.getLogger(__name__)
+
 
 
 class ListView(TemplateView):
@@ -24,6 +30,10 @@ class ListView(TemplateView):
     def post(self, request, *args, **kwargs):
 
         files = collect()
+        messages.success(request, 'Your file has been created and saved successfully!')
+
+        logging.info('Your file has been created and saved successfully!')
+
 
         return render(
             request,

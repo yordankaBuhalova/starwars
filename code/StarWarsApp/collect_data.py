@@ -16,7 +16,7 @@ def collect():
     planets = collect_data('planets')
 
     transform_data(people, planets)
-
+    # queryset of files
     files = DatasetCSV.objects.all()
 
     return files
@@ -28,33 +28,32 @@ def collect_data(dataset):
         Args: "people" or "planets"
     '''
     manager = Manager()
-    pages = []
+    # elements count
+    el_count = manager.Value(int,0)
     data = manager.list()
     # set data url
     data_url = "{}/{}/".format(SWAPI_URL, dataset)
     # fetch data
-    fetch(data_url, pages, data)
-    # elements count
-    count = pages[0]["count"]
+    fetch(data_url, el_count, data)
     # page counter
-    total_pages = count_total_pages(count, len(data))
+    total_pages = count_total_pages(el_count, len(data))
     # set url for one page
     data_url = data_url + '?page='
 
     for page_num in range(2, total_pages + 1):
         # fetch the data from all pages
-        r = Process(target=fetch, args=(data_url + str(page_num), pages, data))
+        r = Process(target=fetch, args=(data_url + str(page_num), el_count, data))
         r.start()
         r.join()
 
     return data
 
 
-def fetch(url, pages, data_result):
+def fetch(url, el_count, data_result):
     '''
     Fetch the Information from SWAPI
     Args:
-        url, pages, data_result
+        url, el_count, data_result
     '''
     r = req.get(url, verify=False)
     logger.info(url)
@@ -62,7 +61,7 @@ def fetch(url, pages, data_result):
     if r.status_code == 200:
         res = r.json()
         if '?page=' not in url:
-            pages.append(res)
+            el_count.value= res["count"]
 
         data = res["results"]
         for i in data:
