@@ -11,7 +11,7 @@
     <div class="btn-group mb-3" role="group" id="select_btn"  aria-label="Basic checkbox toggle button group">
 
         {% for key in head %}
-        {%if key in criteries %}
+        {%if key in criteria %}
             <input type="checkbox" name="{{key}}" class="btn-check" id="{{key}}" autocomplete="off" value="{{key}}" checked onchange="this.form.submit()">
         {%else%}
         <input type="checkbox" name="{{key}}" class="btn-check" id="{{key}}" autocomplete="off" value="{{key}}"  onchange="this.form.submit()">

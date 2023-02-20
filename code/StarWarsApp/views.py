@@ -86,16 +86,16 @@ class DetailView(TemplateView):
         # take headers
         header_keys = etl.header(data)
 
+        # collect criteria choice from request
+        for title in header_keys:
+            if request.POST.get(title):
+                criteria.append(title)
+
         req_data = {
             'csv_file': csv_file,
             'head': header_keys,
             'criteria': criteria
         }
-
-        # collect criteria choice from request
-        for title in header_keys:
-            if request.POST.get(title):
-                criteria.append(title)
 
         if request.POST.get('load_entries'):
             # if request contains load_entries - load 10 more rows from data
