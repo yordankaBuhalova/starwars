@@ -27,11 +27,15 @@ class ListView(TemplateView):
 
     def post(self, request, *args, **kwargs):
 
+        old_files = DatasetCSV.objects.all()
         files = collect()
-        messages.success(request, 'Your file has been created and saved successfully!')
 
-        logging.info('Your file has been created and saved successfully!')
-
+        if len(old_files) < len(files):
+            messages.success(request, 'Your file has been created and saved successfully!')
+            logging.info('Your file has been created and saved successfully!')
+        else:
+            messages.error(request, 'Something went wrong!')
+            logging.info('Something went wrong!')
 
         return render(
             request,
