@@ -5,6 +5,10 @@ in the Star Wars universe from the [SWAPI](https://pipedream.com/apps/swapi).
 
 The entry endpoint for data retrieval is: `https://swapi.co/api/people/`
 
+The application uses multiprocessing to reduce the time required to process the requests to the API.
+
+The data is then saved as csv files and `petl` is used to make it possible for the user to process and query data from them.
+
 ## Env-Requirements:
 
 * Django>= 4.0
