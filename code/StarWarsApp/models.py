@@ -23,3 +23,8 @@ class DatasetCSV(models.Model):
 
     def __str__(self):
         return str(self.created_date)
+
+    class Meta:
+
+        verbose_name = "Colection"
+        verbose_name_plural = "Collections"
