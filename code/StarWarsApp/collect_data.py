@@ -32,7 +32,7 @@ def collect_data(dataset):
     '''
     manager = Manager()
     # elements count
-    el_count = manager.Value(int,0)
+    el_count = manager.Value(int, 0)
     data = manager.list()
     # set data url
     data_url = "{}/{}/".format(SWAPI_URL, dataset)
@@ -78,7 +78,6 @@ def fetch(url, el_count, data_result):
         logger.error(r)
 
 
-
 def count_total_pages(element_count, max_count_per_page):
     '''
     Page total counter
@@ -112,9 +111,10 @@ def transform_data(people, planets):
     create_dataset(data_tb)
 
 
-
 def build_people_table(people):
-
+    '''
+        Build table with people information
+    '''
     people_table = etl.fromdicts(people)
     remove_headers = [
         'films',
@@ -134,6 +134,9 @@ def build_people_table(people):
 
 
 def build_planets_table(planets):
+    '''
+        Build table with planets
+    '''
     # add only selected columns to table
     planet_table = etl.fromdicts(planets, header={'name', 'url'})
     # rename column
