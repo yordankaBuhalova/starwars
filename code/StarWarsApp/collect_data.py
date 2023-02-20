@@ -12,6 +12,9 @@ logger = logging.getLogger(__name__)
 
 
 def collect():
+    '''
+        Collect, transform the Information and return files
+    '''
     people = collect_data('people')
     planets = collect_data('planets')
 
@@ -40,10 +43,15 @@ def collect_data(dataset):
     # set url for one page
     data_url = data_url + '?page='
 
+    procs = []
     for page_num in range(2, total_pages + 1):
         # fetch the data from all pages
         r = Process(target=fetch, args=(data_url + str(page_num), el_count, data))
+        procs.append(r)
         r.start()
+
+    # complete the process
+    for r in procs:
         r.join()
 
     return data
@@ -70,13 +78,14 @@ def fetch(url, el_count, data_result):
         logger.error(r)
 
 
-def count_total_pages(element_count, count_per_page):
+
+def count_total_pages(element_count, max_count_per_page):
     '''
     Page total counter
     Args:
-        element_count, count_per_page
+        element_count, max_count_per_page
     '''
-    total_pages = int(element_count/10)
+    total_pages = int(element_count/max_count_per_page)
     if element_count % 10 != 0:
         total_pages = total_pages + 1
 
@@ -99,10 +108,9 @@ def transform_data(people, planets):
     data_tb = etl.cutout(data_tb, 'world')
     # add date column
     data_tb = add_date(data_tb)
-    # crate csv and save the path to a db obj
+    # create csv and save the path to a db obj
     create_dataset(data_tb)
 
-    return data_tb
 
 
 def build_people_table(people):
